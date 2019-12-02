@@ -4,7 +4,7 @@ import os
 from bson.objectid import ObjectId
 
 host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/Playlister')
-client = MongoClient(host=f'{host}?retryWrites=false
+client = MongoClient(host=f'{host}?retryWrites=false)
 db = client.get_default_database()
 playlists = db.playlists
 
@@ -17,7 +17,6 @@ app = Flask(__name__)
 def video_url_creator(id_lst):
     videos = []
     for vid_id in id_lst:
-        # We know that embedded YouTube videos always have this format
         video = 'https://youtube.com/embed/' + vid_id
         videos.append(video)
     return videos
