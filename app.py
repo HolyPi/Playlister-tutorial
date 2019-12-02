@@ -1,6 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
 from pymongo import MongoClient
+import os
 from bson.objectid import ObjectId
+
+host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/Playlister')
+client = MongoClient(host=host)
+db = client.get_default_database()
+playlists = db.playlists
 
 client = MongoClient()
 db = client.Playlister
@@ -41,7 +47,7 @@ def playlists_new():
 @app.route('/playlists', methods=['POST'])
 def playlists_submit():
     """Submit a new playlist."""
-    
+
     video_ids = request.form.get('video_ids').split()
     videos = video_url_creator(video_ids)
 
