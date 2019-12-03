@@ -50,18 +50,15 @@ def playlists_update(playlist_id):
     """Submit an edited playlist."""
     video_ids = request.form.get('video_ids').split()
     videos = video_url_creator(video_ids)
-    # create our updated playlist
     updated_playlist = {
         'title': request.form.get('title'),
         'description': request.form.get('description'),
         'videos': videos,
         'video_ids': video_ids
     }
-    # set the former playlist to the new one we just updated/edited
     playlists.update_one(
         {'_id': ObjectId(playlist_id)},
         {'$set': updated_playlist})
-    # take us back to the playlist's show page
     return redirect(url_for('playlists_show', playlist_id=playlist_id))
 
 @app.route('/playlists', methods=['POST'])
